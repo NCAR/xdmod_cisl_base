@@ -1,0 +1,69 @@
+[
+    {
+        "resource": "yellowstone",
+        "resource_type_id": 1,
+        "name": "yellowstone.ucar.edu"
+    },
+    {
+        "resource": "erebus",
+        "resource_type_id": 1,
+        "name": "erebus.ucar.edu"
+    },
+    {
+        "resource": "caldera",
+        "resource_type_id": 2,
+        "name": "caldera.ucar.edu"
+    },
+    {
+        "resource": "geyser",
+        "resource_type_id": 2,
+        "name": "geyser.ucar.edu"
+    },
+    {
+        "resource": "jellystone",
+        "resource_type_id": 4,
+        "name": "jellystone.ucar.edu"
+    },
+    {
+        "resource": "booboo",
+        "resource_type_id": 4,
+        "name": "booboo.ucar.edu"
+    },
+    {
+        "resource": "yogi",
+        "resource_type_id": 4,
+        "name": "yogi.ucar.edu"
+    },
+    {
+        "resource": "fawn",
+        "resource_type_id": 4,
+        "name": "fawn.ucar.edu"
+    },
+    {
+        "resource": "pronghorn",
+        "resource_type_id": 2,
+        "name": "pronghorn.ucar.edu"
+    },
+    {
+        "resource": "glade",
+        "resource_type_id": 3,
+        "name": "glade.ucar.edu"
+    },
+    {
+        "resource": "laramie",
+        "resource_type_id": 1,
+        "name": "laramie.ucar.edu",
+        "pi_column": "REPLACE(account,'\"','')"
+    },
+    {
+        "resource": "cheyenne",
+        "resource_type_id": 1,
+        "name": "cheyenne.ucar.edu",
+        "pi_column": "REPLACE(account,'\"','')"
+    },
+    {
+        "resource": "flash",
+        "resource_type_id": 1,
+        "name": "flash.ucar.edu"
+    }
+]

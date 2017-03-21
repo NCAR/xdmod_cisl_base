@@ -1,0 +1,46 @@
+--- a/usr/share/xdmod/classes/OpenXdmod/Shredder/Pbs.php    2017-01-10 18:48:47.000000000 +0000
++++ b/usr/share/xdmod/classes/OpenXdmod/Shredder/Pbs.php    2017-02-27 21:46:46.063922849 +0000
+@@ -156,6 +156,8 @@
+         'cpus'            => 'resources_used_cpus',
+     );
+
++    protected static $hostsStringToParsedHostArray;
++
+     /**
+      * @inheritdoc
+      */
+@@ -324,6 +326,11 @@
+      */
+     protected function parseExecHost($hosts)
+     {
++        if (isset(self::$hostsStringToParsedHostArray) &&
++            array_key_exists($hosts,self::$hostsStringToParsedHostArray)) {
++           return self::$hostsStringToParsedHostArray[$hosts];
++        }
++
+         $hostList = $this->parseHosts($hosts);
+
+         // Key is the node name, value is the number of cpus.
+@@ -347,11 +354,13 @@
+             $cpuCount += $cpus;
+         }
+
+-        return array(
++        $parsedHostArray = array(
+             'host_list'  => $hostList,
+             'node_count' => $nodeCount,
+             'cpu_count'  => $cpuCount,
+         );
++        self::$hostsStringToParsedHostArray[$hosts] = $parsedHostArray;
++        return $parsedHostArray;
+     }
+
+     /**
+@@ -510,7 +519,6 @@
+                 }
+             }
+         }
+-
+         return $hostList;
+     }
+

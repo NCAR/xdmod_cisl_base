@@ -1,0 +1,81 @@
+[
+    {
+        "resource": "laramie",
+        "processors": 2592,
+        "nodes": 72,
+        "ppn": 36
+    },
+    {
+        "resource": "cheyenne",
+        "processors": 145152,
+        "nodes": 4032,
+        "ppn": 36
+    },
+    {
+        "resource": "flash",
+        "processors": 72,
+        "nodes": 1,
+        "ppn": 72
+    },
+    {
+        "resource": "yellowstone",
+        "processors": 72576,
+        "nodes": 4536,
+        "ppn": 16
+    },
+    {
+        "resource": "erebus",
+        "processors": 1344,
+        "nodes": 84,
+        "ppn": 16
+    },
+    {
+        "resource": "caldera",
+        "processors": 256,
+        "nodes": 16,
+        "ppn": 16
+    },
+    {
+        "resource": "geyser",
+        "processors": 640,
+        "nodes": 16,
+        "ppn": 40
+    },
+    {
+        "resource": "jellystone",
+        "processors": 512,
+        "nodes": 32,
+        "ppn": 16
+    },
+    {
+        "resource": "booboo",
+        "processors": 32,
+        "nodes": 2,
+        "ppn": 16
+    },
+    {
+        "resource": "yogi",
+        "processors": 40,
+        "nodes": 1,
+        "ppn": 40
+    },
+    {
+        "resource": "fawn",
+        "processors": 16,
+        "nodes": 1,
+        "ppn": 16
+    },
+    {
+        "resource": "pronghorn",
+        "processors": 256,
+        "nodes": 16,
+        "ppn": 16
+    },
+    {
+        "resource": "glade",
+        "processors": 64,
+        "nodes": 4,
+        "ppn": 16
+    }
+]
+

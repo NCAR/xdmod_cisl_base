@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "abbrev": "HPC",
+        "description": "High-Performance Computing"
+    },
+    {
+        "id": 2,
+        "abbrev": "DAV",
+        "description": "Data Analysis and Visualization"
+    },
+    {
+        "id": 3,
+        "abbrev": "GLADE",
+        "description": "Globally Accessible Data Environment"
+    },
+    {
+        "id": 4,
+        "abbrev": "TEST",
+        "description": "Test systems"
+    }
+]

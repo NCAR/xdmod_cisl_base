@@ -1,0 +1,18 @@
+--- a/usr/share/xdmod/classes/OpenXdmod/Shredder/Pbs.php	2016-05-24 13:11:21.000000000 -0400
++++ b/usr/share/xdmod/classes/OpenXdmod/Shredder/Pbs.php	2016-06-20 08:06:42.758288670 -0400
+@@ -474,13 +474,13 @@
+             foreach ($cpuParts as $cpuPart) {
+                 $cpus = array();
+ 
+-                if (strpos($cpuPart, '-') === true) {
++                if (strpos($cpuPart, '-') !== false) {
+ 
+                     // The "-" indicates this is a range of CPU indexes.
+                     list($min, $max) = explode('-', $cpuPart, 2);
+                     $cpus = range($min, $max);
+ 
+-                } elseif (strpos($cpuPart, '*') === true) {
++                } elseif (strpos($cpuPart, '*') !== false) {
+ 
+                     // The number to the left of the "*" is a unique
+                     // index and the number on the right is a CPU count

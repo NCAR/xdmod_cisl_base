@@ -1,0 +1,30 @@
+{
+    "lsf": {
+        "jsmgt1.ucar.edu": [
+            "jellystone":  "/^js/",
+            "booboo":      "/^bo/",
+            "yogi":        "/^(yo|yg)/",
+            "fawn":        "/^fawn/"
+        ],
+        "ermgt1.ucar.edu": [
+            "erebus":      "/^er/"
+        ],
+        "ysmgt1.ucar.edu": [
+            "yellowstone": "/^ys/",
+            "caldera":     "/^ca/",
+            "geyser":      "/^(ge|gy)/",
+            "glade":       "/^glade/",
+            "pronghorn":   "/^pr/"
+        ],
+    },
+    "pbs": {
+        "laadmin1.ucar.edu": [
+            "laramie":     "/^r*/",
+            "flash":       "/^flash/"
+        ].
+        "chadmin1.ucar.edu": [
+            "cheyenne":    "/^r*/"
+        ]
+    }
+}
+

@@ -1,0 +1,102 @@
+diff --git a/usr/share/xdmod/classes/DataWarehouse/Query/Jobs/Statistics/JobSizeWeightedByCU.php b/usr/share/xdmod/classes/DataWarehouse/Query/Jobs/Statistics/JobSizeWeightedByCU.php
+new file mode 100644
+index 0000000..c07ae04
+--- /dev/null
++++ b/usr/share/xdmod/classes/DataWarehouse/Query/Jobs/Statistics/JobSizeWeightedByCU.php
+@@ -0,0 +1,25 @@
++<?php
++namespace DataWarehouse\Query\Jobs\Statistics;
++
++/* 
++* @author Ying Yang,Jeffrey Palmer,Amin Ghadersohi
++* @date 2014-June-12
++*
++* class for calculating the job size weighted by CU
++*/
++
++class JobSizeWeightedByCU extends \DataWarehouse\Query\Jobs\Statistic
++{
++	public function __construct($query_instance = NULL)
++	{
++		parent::__construct('coalesce(sum(jf.processors*(jf.cpu_time/3600.0))/sum(jf.cpu_time/3600.0),0)', 'avg_job_size_weighted_by_core_hours', 'Job Size: Weighted By Core Hours', 'Core Count',1);
++	}
++
++	public function getInfo()
++	{
++		return 	"The average ".ORGANIZATION_NAME." job size weighted by Core hours. Defined as <br>
++		<i>Average Job Size Weighted By Core Hours: </i> sum(i = 0 to n){job i core count*job i core hours consumed }/sum(i = 0 to n){job i core hours consumed}.";
++	}
++}
++ 
++?>
+\ No newline at end of file
+diff --git a/usr/share/xdmod/classes/DataWarehouse/Query/Jobs/Statistics/ScheduleStatistic.php b/usr/share/xdmod/classes/DataWarehouse/Query/Jobs/Statistics/ScheduleStatistic.php
+new file mode 100755
+index 0000000..c0987ee
+--- /dev/null
++++ b/usr/share/xdmod/classes/DataWarehouse/Query/Jobs/Statistics/ScheduleStatistic.php
+@@ -0,0 +1,64 @@
++<?php
++
++namespace DataWarehouse\Query\Jobs\Statistics;
++
++/*
++ * @author Ying Yang,Jeffrey Palmer
++* @date 2014-July-2
++*
++* class for calculating the job size weighted by CU
++*/
++
++class ScheduleStatistic extends \DataWarehouse\Query\Jobs\Statistic {
++        public function __construct($query_instance = NULL) {
++                $duration_formula = 1;
++
++                if ($query_instance != NULL) {
++                        $duration_formula = $query_instance->getDurationFormula ();
++                }
++
++                if ($query_instance->getQueryType () == 'aggregate') {
++                        $date_table_start_ts = $query_instance->_start_date_ts;
++                        $date_table_end_ts = $query_instance->_end_date_ts;
++                } else {
++                        $date_table_start_ts = new \DataWarehouse\Query\Model\TableField ( $query_instance->getDateTable (), $query_instance->getAggregationUnit ()->getUnitName () . '_start_ts' );
++                        $date_table_end_ts = new \DataWarehouse\Query\Model\TableField ( $query_instance->getDateTable (), $query_instance->getAggregationUnit ()->getUnitName () . '_end_ts' );
++                }
++
++                parent::__construct ( "
++                100.0
++                * (COALESCE(SUM(jf.node_time/ 3600.0 * (select distinct(rf.q_ppn) from modw.resourcespecs rf where jf.resource_id=rf.resource_id and rf.resource_id=4
++                        )) /(select case
++                                                when rrf.end_date_ts is null then
++                                                        case
++                                                                when rrf.start_date_ts < {$date_table_start_ts} 
++                                                                then $duration_formula
++                                                                when rrf.start_date_ts < {$date_table_end_ts}
++                                                                then ({$date_table_end_ts} - rrf.start_date_ts)/3600.0
++                                                                else $duration_formula
++                                                        end
++
++                                                when rrf.start_date_ts <= {$date_table_start_ts} and
++                                                      rrf.end_date_ts >=  {$date_table_end_ts}
++                                                         then $duration_formula
++                                                when rrf.start_date_ts < {$date_table_start_ts} and
++                                                     rrf.end_date_ts between {$date_table_start_ts} and {$date_table_end_ts}
++                                                         then $duration_formula
++                                                when rrf.start_date_ts between {$date_table_start_ts} and {$date_table_end_ts}
++                                                         and rrf.end_date_ts > {$date_table_end_ts} 
++                                                         then ({$date_table_end_ts} - rrf.start_date_ts ) / 3600.0
++                                                when rrf.start_date_ts between {$date_table_start_ts} and {$date_table_end_ts}
++                                                     and rrf.end_date_ts between {$date_table_start_ts} and {$date_table_end_ts}
++                                                         then (rrf.end_date_ts - rrf.start_date_ts)/3600.0
++                                                else $duration_formula 
++                                        end
++                                        *sum(rrf.processors) from modw.resourcespecs rrf where rrf.resource_id=4 and find_in_set(rrf.resource_id,group_concat(distinct jf.resource_id)) <> 0 ),0))
++            ", 'scheduled',  'Yellowstone %Scheduled', '%', 2 );
++        }
++        public function getInfo() {
++                return "The percentage of resources scheduled to be utilized by jobs running on Yellowstone.<br/>
++        <i>Yellowstone Scheduled Utilization:</i> the ratio of the total scheduled CPU hours to Yellowstone jobs over a given time period divided by the total CPU hours that the system could have potentially provided during that period.<br/> ";
++        }
++}
++
++?>
