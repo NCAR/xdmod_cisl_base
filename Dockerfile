@@ -10,11 +10,11 @@ ENV VOL_SECRETS=/run/secrets \
     VOL_APP_DATA=/var/xdmod \
     VOL_DB_DATA=/var/lib/mysql \
     HOME=/home/xdmod \
-    PATH=${PATH}:/home/xdmod/bin
+    PATH=${PATH}:/home/xdmod/bin \
+    MAILHUB=ndir.ucar.edu
 
 RUN yum -y install \
-    mailx \
-    python-yaml
+    ssmtp
 
 RUN git clone https://github.com/NCAR/sweg-docker-util /sweg-docker-util
 
