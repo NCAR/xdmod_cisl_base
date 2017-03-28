@@ -61,11 +61,10 @@ ENTRYPOINT [ \
     "-vvv" \
 ]
 
-VOLUME [ \
-  "${VOL_SECRETS}", \
-  "${VOL_LOGS}", \
-  "${VOL_APP_DATA}" \
-  "${VOL_DB_DATA}" \
-]
+VOLUME \
+    ${VOL_SECRETS} \
+    ${VOL_LOGS} \
+    ${VOL_APP_DATA} \
+    ${VOL_DB_DATA}
 
 CMD [ "runuser", "-m", "-u", "xdmod", "/bin/bash" ]
