@@ -5,13 +5,13 @@ LABEL repo=cisl-repo \
       name=xdmod_cisl_base \
       version=1.0
 
-ENV VOL_SECRETS=/run/secrets \
+ENV APP_NAME=xdmod_cisl \
+    VOL_SECRETS=/run/secrets \
     VOL_LOGS=/var/log \
     VOL_APP_DATA=/var/xdmod \
     VOL_DB_DATA=/var/lib/mysql \
     HOME=/home/xdmod \
-    PATH=${PATH}:/home/xdmod/bin \
-    MAILHUB=ndir.ucar.edu
+    PATH=${PATH}:/home/xdmod/bin
 
 RUN yum -y install \
     ssmtp
@@ -23,7 +23,11 @@ COPY etc /etc
 WORKDIR /
 RUN patch -p1 </etc/patch/5.6-001.patch ; \
     patch -p1 </etc/patch/5.6-002.patch ; \
-    patch -p1 </etc/patch/5.6-003.patch
+    patch -p1 </etc/patch/5.6-003.patch ; \
+    patch -p1 </etc/patch/5.6-004.patch
+
+RUN rm -f /etc/alternatives/mta ; \
+    ln -s /usr/sbin/ssmtp /etc/alternatives/mta
 
 # Setup xdmod user
 RUN useradd -d ${HOME} -m -s /bin/bash -U xdmod
