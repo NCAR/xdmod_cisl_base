@@ -1,8 +1,7 @@
 FROM cisl-repo/xdmod_distro:1.0
 
 ENV REFRESHED_AT 2017-03-20
-LABEL repo=cisl-repo \
-      name=xdmod_cisl_base \
+LABEL name=xdmod_cisl_base \
       version=1.0
 
 ENV APP_NAME=xdmod_cisl \
@@ -11,9 +10,11 @@ ENV APP_NAME=xdmod_cisl \
     VOL_APP_DATA=/var/xdmod \
     VOL_DB_DATA=/var/lib/mysql \
     HOME=/home/xdmod \
+    TZ=America/Denver \
     PATH=${PATH}:/home/xdmod/bin
 
 RUN yum -y install \
+    mailx \
     ssmtp
 
 RUN git clone https://github.com/NCAR/sweg-docker-util /sweg-docker-util
@@ -35,12 +36,9 @@ WORKDIR ${HOME}
 RUN mkdir bin ; ln -s /bin/xdmod-* bin
 
 #
-# Secrets ($VOL_SECRETS)
-#
-# mysql-xdmod.ini should be in the format of a .ini file, with the same
-# sections portal_settings.ini uses for database configuration ([logger],
-# [database], [datawarehouse], [shredder], [hpcdb]). The only parameters set
-# should be "pass = <passwd>" parameters.
+# mysql-root-password should contain the root MySQL paswords.
+# mysql-xdmod.ini should contain a "[secrets]" section in which there is a
+# key of the form "xdmod@<dbhost>", the value of which is the xdmod password.
 #
 # ~xdmod/.ssh keys are used by scripts that fetch accounting log files
 # 
