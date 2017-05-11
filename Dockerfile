@@ -35,6 +35,13 @@ RUN useradd -d ${HOME} -m -s /bin/bash -U xdmod
 WORKDIR ${HOME}
 RUN mkdir bin ; ln -s /bin/xdmod-* bin
 
+# add apache to xdmod group for secrets.ini symlink
+RUN usermod -a -G xdmod apache
+
+# set timezone...
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/America/Denver /etc/localtime
+
 #
 # mysql-root-password should contain the root MySQL paswords.
 # mysql-xdmod.ini should contain a "[secrets]" section in which there is a
