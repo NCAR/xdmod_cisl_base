@@ -57,9 +57,9 @@ RUN ln -s $VOL_SECRETS/mysql-xdmod.ini /etc/xdmod/portal_settings.d/secrets.ini 
 
 #
 # Note that the list of files to be patched by deploy-env.sh is in
-# /etc/deploy-env.conf. If you want to build a new image from this container
+# /etc/deploy-env-files.cnf. If you want to build a new image from this container
 # that has additional files to patch, append the list of additional files to
-# /etc/deploy-env.conf
+# /etc/deploy-env-files.cnf
 #
 ONBUILD ENTRYPOINT [ \
     "/sweg-docker-util/deploy-env.sh", \
