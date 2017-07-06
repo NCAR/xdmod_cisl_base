@@ -1,7 +1,8 @@
 FROM cisl-repo/xdmod_distro:1.0
 
 ENV REFRESHED_AT 2017-03-20
-LABEL name=xdmod_cisl_base \
+LABEL repo=cisl-repo \
+      name=xdmod_cisl_base \
       version=1.0
 
 ENV APP_NAME=xdmod_cisl \
