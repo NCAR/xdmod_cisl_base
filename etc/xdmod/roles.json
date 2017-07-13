@@ -6,27 +6,47 @@
                     "name": "tg_summary",
                     "default": true,
                     "title": "Summary",
-                    "position": 100
+                    "position": 100,
+                    "javascriptClass": "XDMoD.Module.Summary",
+                    "javascriptReference": "CCR.xdmod.ui.tgSummaryViewer",
+                    "tooltip": "Displays summary information",
+                    "userManualSectionName": "Summary Tab"
                 },
                 {
                     "name": "tg_usage",
                     "title": "Usage",
-                    "position": 200
+                    "position": 200,
+                    "javascriptClass": "XDMoD.Module.Usage",
+                    "javascriptReference": "CCR.xdmod.ui.chartViewerTGUsage",
+                    "tooltip": "Displays usage",
+                    "userManualSectionName": "Usage Tab"
                 },
                 {
                     "name": "metric_explorer",
                     "title": "Metric Explorer",
-                    "position": 300
+                    "position": 300,
+                    "javascriptClass": "XDMoD.Module.MetricExplorer",
+                    "javascriptReference": "CCR.xdmod.ui.metricExplorer",
+                    "userManualSectionName": "Metric Explorer",
+                    "tooltip": ""
                 },
                 {
                     "name": "report_generator",
                     "title": "Report Generator",
-                    "position": 1000
+                    "position": 1000,
+                    "javascriptClass": "XDMoD.Module.ReportGenerator",
+                    "javascriptReference": "CCR.xdmod.ui.reportGenerator",
+                    "userManualSectionName": "Report Generator",
+                    "tooltip": ""
                 },
                 {
                     "name": "about_xdmod",
                     "title": "About",
-                    "position": 10000
+                    "position": 10000,
+                    "javascriptClass": "XDMoD.Module.About",
+                    "javascriptReference": "CCR.xdmod.ui.aboutXD",
+                    "userManualSectionName": "About",
+                    "tooltip": ""
                 }
             ],
             "query_descripters": [
@@ -240,17 +260,29 @@
                     "name": "tg_summary",
                     "default": true,
                     "title": "Summary",
-                    "position": 100
+                    "position": 100,
+                    "javascriptClass": "XDMoD.Module.Summary",
+                    "javascriptReference": "CCR.xdmod.ui.tgSummaryViewer",
+                    "tooltip": "Displays summary information",
+                    "userManualSectionName": "Summary Tab"
                 },
                 {
                     "name": "tg_usage",
                     "title": "Usage",
-                    "position": 200
+                    "position": 200,
+                    "javascriptClass": "XDMoD.Module.Usage",
+                    "javascriptReference": "CCR.xdmod.ui.chartViewerTGUsage",
+                    "tooltip": "Displays usage",
+                    "userManualSectionName": "Usage Tab"
                 },
                 {
                     "name": "about_xdmod",
                     "title": "About",
-                    "position": 10000
+                    "position": 10000,
+                    "javascriptClass": "XDMoD.Module.About",
+                    "javascriptReference": "CCR.xdmod.ui.aboutXD",
+                    "userManualSectionName": "About",
+                    "tooltip": ""
                 }
             ],
             "query_descripters": [
@@ -310,34 +342,34 @@
             ]
         },
         "usr": {
-            "extends": "default",
             "dimensions": [
                 "person"
-            ]
+            ],
+            "extends": "default"
         },
         "cd": {
-            "extends": "default",
             "dimensions": [
                 "provider"
-            ]
+            ],
+            "extends": "default"
         },
         "pi": {
-            "extends": "default",
             "dimensions": [
                 "pi"
-            ]
+            ],
+            "extends": "default"
         },
         "cs": {
-            "extends": "default",
             "dimensions": [
                 "provider"
-            ]
+            ],
+            "extends": "default"
         },
         "mgr": {
-            "extends": "default",
             "dimensions": [
                 "person"
-            ]
+            ],
+            "extends": "default"
         }
     }
 }
