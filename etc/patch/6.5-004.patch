@@ -1,0 +1,12 @@
+--- a/usr/share/xdmod/db/migrations/6.0.0-6.5.0/mod_shredder.sql	2017-01-10 11:48:48.000000000 -0700
++++ b/usr/share/xdmod/db/migrations/6.0.0-6.5.0/mod_shredder.sql	2017-07-20 14:05:48.220679881 -0600
+@@ -5,7 +5,7 @@
+ ALTER TABLE `staging_job` MODIFY COLUMN `node_list` mediumtext;
+
+ ALTER TABLE `shredded_job_slurm`
+-    ADD COLUMN `req_gres` text NOT NULL DEFAULT '' AFTER `req_mem`,
+-    ADD COLUMN `req_tres` text NOT NULL DEFAULT '' AFTER `req_gres`;
++    ADD COLUMN `req_gres` text NOT NULL AFTER `req_mem`,
++    ADD COLUMN `req_tres` text NOT NULL AFTER `req_gres`;
+
+ INSERT INTO `schema_version_history` VALUES ('mod_shredder', '6.5.0', NOW(), 'upgraded', 'N/A');
