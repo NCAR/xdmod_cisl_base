@@ -1,0 +1,44 @@
+--- /usr/share/xdmod/classes/CCR/DB.php	2017-07-25 22:07:08.915996619 +000
++++ /usr/share/xdmod/classes/CCR/DB_new.php	2017-07-25 23:07:45.661825505 +0000
+@@ -89,6 +89,11 @@
+         $host     = ( array_key_exists('host', $iniSection) ? $iniSection['host'] : null );
+         $port     = ( array_key_exists('port', $iniSection) ? $iniSection['port'] : null );
+ 
++        $secret = static::getHostUserPassword($host,$user);
++        if (! is_null($secret)) {
++            $password = $secret;
++        }
++
+         $engine = "CCR\\DB\\$engine";
+ 
+         // Ensure that the class exists before we attempt to instantiate it
+@@ -114,4 +119,29 @@
+         return self::$instancePool[$sectionName];
+ 
+     }  // factory()
++
++
++    /**
++     * Retrieve a password for a given host, user pair
++     *
++     * @param $host  Host name as it appears in a "host" option
++     * @param $user  Username as it appears in a "user" option
++     *
++     * @throws Exception if the configuration file could not be parsed
++     *
++     * @return string  The secret, or NULL if there is no such secret
++     */
++    public static function getHostUserPassword($host,$user)
++    {
++        try {
++            $secret = xd_utilities\getConfiguration('secrets', "$user@$host");
++            return $secret;
++        } catch (Exception $e) {
++            if (strpos($e->getMessage(),'does not exist in section') === FALSE) {
++              throw $e;
++            }
++            return NULL;
++        }
++    }
++
+ }  // class DB

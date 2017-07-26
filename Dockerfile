@@ -1,9 +1,9 @@
-FROM cisl-repo/xdmod_distro:1.2
+FROM cisl-repo/xdmod_distro:1.3
 
-ENV REFRESHED_AT 2017-07-20
+ENV REFRESHED_AT 2017-07-24
 LABEL repo=cisl-repo \
       name=xdmod_cisl_base \
-      version=1.2
+      version=1.3
 
 ENV APP_NAME=xdmod_cisl \
     VOL_SECRETS=/run/secrets \
@@ -23,10 +23,9 @@ RUN git clone https://github.com/NCAR/sweg-docker-util /sweg-docker-util
 COPY etc /etc
 
 WORKDIR /
-RUN patch -p1 </etc/patch/6.5-001.patch ; \
-    patch -p1 </etc/patch/6.5-002.patch ; \
-    patch -p1 </etc/patch/6.5-003.patch ; \
-    patch -p1 </etc/patch/6.5-004.patch
+RUN patch -p1 </etc/patch/6.6-001.patch ; \
+    patch -p1 </etc/patch/6.6-002.patch ; \
+    patch -p1 </etc/patch/6.6-003.patch
 
 RUN rm -f /etc/alternatives/mta ; \
     ln -s /usr/sbin/ssmtp /etc/alternatives/mta
