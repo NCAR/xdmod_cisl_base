@@ -1,0 +1,928 @@
+{
+    "modw_supremm.job": [
+        {
+            "key": "account",
+            "name": "Account",
+            "units": null,
+            "per": "job",
+            "documentation": "The name of the account or project (also known as a charge number).",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "local_job_id",
+            "name": "Local Job Id",
+            "units": null,
+            "per": "job",
+            "documentation": "The unique identifier assigned to the job by the job scheduler.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "username",
+            "name": "System Username",
+            "units": null,
+            "per": "job",
+            "documentation": "The username on the resource of the user that ran the job. May be a UID or string username depending on the resource.",
+            "dtype": "accounting",
+            "visibility": "non-public",
+            "group": "Administration"
+        },
+        {
+            "key": "shared",
+            "name": "Shared",
+            "units": "boolean",
+            "per": "job",
+            "documentation": "Whether the job ran on a node that ran at least one other job.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Allocated resource"
+        },
+        {
+            "key": "cores",
+            "name": "Cores",
+            "units": null,
+            "per": "job",
+            "documentation": "The total number of cores assigned to the job.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Allocated resource"
+        },
+        {
+            "key": "nodes",
+            "name": "Nodes",
+            "units": null,
+            "per": "job",
+            "documentation": "The number of nodes that were assigned to the job.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Allocated resource"
+        },
+        {
+            "key": "cores_avail",
+            "name": "Total Cores Available",
+            "units": null,
+            "per": "job",
+            "documentation": "Total number of cores present on the nodes on which the job ran.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Allocated resource"
+        },
+        {
+            "key": "cpu_time",
+            "name": "Cpu Time",
+            "units": "seconds",
+            "per": "job",
+            "documentation": "The total CPU core time. This value is calculated as number of assigned cores multiplied by duration if not provided by the scheduler.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Allocated resource"
+        },
+        {
+            "key": "node_time",
+            "name": "Node Time",
+            "units": "seconds",
+            "per": "job",
+            "documentation": "Total node time. This value is calculated as number of assigned nodes multiplied by duration if not provided by the scheduler.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Allocated resource"
+        },
+        {
+            "key": "name",
+            "name": "Name",
+            "units": null,
+            "per": "job",
+            "documentation": "The name of the job as reported by the job scheduler.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Executable"
+        },
+        {
+            "key": "requested_nodes",
+            "name": "Requested Nodes",
+            "units": null,
+            "per": "job",
+            "documentation": "The number of nodes requested at job submission time. This value will be zero if the user did not specify the number of required nodes or if this information is not provided for the resource.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Requested resource"
+        },
+        {
+            "key": "requested_wall_time",
+            "name": "Requested Wall Time",
+            "units": "seconds",
+            "per": "job",
+            "documentation": "The requested job duration.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Requested resource"
+        },
+        {
+            "key": "queue_id",
+            "name": "Queue",
+            "per": "job",
+            "documentation": "The name of the queue to which the job was submitted.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Requested resource"
+        },
+        {
+            "key": "wait_time",
+            "name": "Wait Time",
+            "units": "seconds",
+            "per": "job",
+            "documentation": "The amount of time between job submit and job start.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Timing"
+        },
+        {
+            "key": "wall_time",
+            "name": "Wall Time",
+            "units": "seconds",
+            "per": "job",
+            "documentation": "The wall-clock duration of the job.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Timing"
+        },
+        {
+            "key": "eligible_time_ts",
+            "name": "Eligible Time",
+            "units": "ts",
+            "per": "job",
+            "documentation": "The time that the job was ready to be run by the scheduler.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Timing"
+        },
+        {
+            "key": "end_time_ts",
+            "name": "End Time",
+            "units": "ts",
+            "per": "job",
+            "documentation": "The time that the job ended.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Timing"
+        },
+        {
+            "key": "start_time_ts",
+            "name": "Start Time",
+            "units": "ts",
+            "per": "job",
+            "documentation": "The time that the job started running.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Timing"
+        },
+        {
+            "key": "submit_time_ts",
+            "name": "Submit Time",
+            "units": "ts",
+            "per": "job",
+            "documentation": "The time that the job was submitted to the job scheduler.",
+            "dtype": "accounting",
+            "visibility": "public",
+            "group": "Timing"
+        },
+        {
+            "key": "cpu_user_imbalance",
+            "name": "Cpu User Imbalance",
+            "units": "%",
+            "per": "core",
+            "documentation": "max - min / max cpu user over all cores job ran on",
+            "dtype": "analysis",
+            "visibility": "public",
+            "group": "misc"
+        },
+        {
+            "key": "catastrophe",
+            "name": "Catastrophe",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "indicator L1D cache load drop off (smaller is worse)",
+            "dtype": "analysis",
+            "visibility": "public",
+            "group": "misc"
+        },
+        {
+            "key": "organization_id",
+            "name": "Organization",
+            "units": null,
+            "per": "job",
+            "documentation": "The organization that owns the resource on which the job ran.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "resource_id",
+            "name": "Resource",
+            "units": null,
+            "per": "job",
+            "documentation": "The resource that ran the job.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "fos_id",
+            "name": "Hierarchy Bottom Level",
+            "per": "job",
+            "documentation": "",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "principalinvestigator_person_id",
+            "name": "PI",
+            "per": "job",
+            "documentation": "The PI of the job owner.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "piperson_organization_id",
+            "name": "PI Institution",
+            "per": "job",
+            "documentation": "The organization of the job owner's PI.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "person_id",
+            "name": "User",
+            "per": "job",
+            "documentation": "The name of the job owner.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "person_organization_id",
+            "name": "User Institution",
+            "per": "job",
+            "documentation": "The name of the organization of the job owner.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Administration"
+        },
+        {
+            "key": "systemaccount_id",
+            "name": "Username",
+            "per": "job",
+            "documentation": "The XSEDE username of the user that ran the job.",
+            "dtype": "foreignkey",
+            "visibility": "non-public",
+            "group": "Administration"
+        },
+        {
+            "key": "application_id",
+            "name": "Application",
+            "per": "job",
+            "documentation": "The application that the job ran. This value is autodetected based on the job executable path. A value of uncategorized indicates that the executable path was not recognized as a community application. A value of PROPRIETARY is shown for any application that has a non-open licence agreement that may restrict publishing of performance data. NA means not available.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Executable"
+        },
+        {
+            "key": "executable_id",
+            "name": "Executable",
+            "per": "job",
+            "documentation": "The full path to the main job executable.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Executable"
+        },
+        {
+            "key": "exit_status_id",
+            "name": "Exit Status",
+            "per": "job",
+            "documentation": "The exit status of the job reported by the job scheduler. The meaning of this field depends on the job scheduler.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Executable"
+        },
+        {
+            "key": "cwd_id",
+            "name": "Working directory",
+            "per": "job",
+            "documentation": "The working directory where the main job executable was launched.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Executable"
+        },
+        {
+            "key": "datasource_id",
+            "name": "Datasource",
+            "per": "job",
+            "documentation": "The software used to collect the performance data.",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "Other"
+        },
+        {
+            "key": "tg_job_id",
+            "name": "Tg Job Id",
+            "per": "job",
+            "documentation": "the local job id",
+            "dtype": "foreignkey",
+            "visibility": "public",
+            "group": "misc"
+        },
+        {
+            "key": "granted_pe",
+            "name": "Granted Pe",
+            "units": null,
+            "per": "job",
+            "documentation": "number of granted processing elements (i.e. wayness)",
+            "dtype": "ignore",
+            "visibility": "public",
+            "group": "misc"
+        },
+        {
+            "key": "account_id",
+            "name": "Account",
+            "per": "job",
+            "documentation": "The name of the account or project (also known as a charge number).",
+            "dtype": "ignore",
+            "visibility": "public",
+            "group": "misc"
+        },
+        {
+            "key": "jobname_id",
+            "name": "Jobname",
+            "per": "job",
+            "documentation": "foreign key to the jobname table.",
+            "dtype": "ignore",
+            "visibility": "public",
+            "group": "misc"
+        },
+        {
+            "key": "nodecount_id",
+            "name": "Nodecount",
+            "per": "job",
+            "documentation": "foreign key to the nodecount table.",
+            "dtype": "ignore",
+            "visibility": "public",
+            "group": "misc"
+        },
+        {
+            "key": "gpu0_nv_utilization",
+            "name": "Gpu0 Nv Utilization",
+            "units": "%",
+            "per": "node",
+            "documentation": "average % utilization of the gpu",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Accelerator Statistics"
+        },
+        {
+            "key": "gpu0_nv_mem_used",
+            "name": "Gpu0 Nv Mem Used",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "average memory used by gpu i averaged across nodes, only support nvidia.  Could be multiple cards per machine of different types",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Accelerator Statistics"
+        },
+        {
+            "key": "cpu_idle",
+            "name": "CPU Idle",
+            "units": "cpuratio",
+            "per": "core",
+            "documentation": "The ratio of idle cpu time to total cpu time for the cores that the job was assigned.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "cpu_system",
+            "name": "CPU System",
+            "units": "cpuratio",
+            "per": "core",
+            "documentation": "The ratio of system cpu time to total cpu time for the cores that the job was assigned.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "cpu_user",
+            "name": "CPU User",
+            "units": "cpuratio",
+            "per": "core",
+            "documentation": "The ratio of user cpu time to total cpu time for the cores that the job was assigned.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "flops",
+            "name": "FLOPS",
+            "units": "ops",
+            "per": "core",
+            "documentation": "The total number of floating point operations on average per core",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "cpiref",
+            "name": "CPI (ref)",
+            "units": "ratio",
+            "per": "core",
+            "documentation": "The number of cpu clock ticks per instruction on average per core.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "cpiref_cov",
+            "name": "CPI (ref) cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average CPI for each core",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "cpldref",
+            "name": "CPLD (ref)",
+            "units": "ratio",
+            "per": "core",
+            "documentation": "The ratio of clock ticks to L1D cache load on average per core. The CPLD is calculated using the reference processor clock.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "cpldref_cov",
+            "name": "CPLD (ref) cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average CPLD for each core",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "cpu_user_cv",
+            "name": "CPU User cov",
+            "units": "ratio",
+            "per": "core",
+            "documentation": "Coefficient of variation for the CPU user for all cores that were assigned to the job.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "flops_cov",
+            "name": "FLOPS cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average FLOPS for each core",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "CPU Statistics"
+        },
+        {
+            "key": "block_sda_rd_bytes",
+            "name": "Block device \"sda\" data read",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "The average amount of data read per node from block device sda.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "File I/O Statistics"
+        },
+        {
+            "key": "block_sda_wr_bytes",
+            "name": "Block device \"sda\" data written",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "The average number of bytes written per node to block device sda.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "File I/O Statistics"
+        },
+        {
+            "key": "block_sda_rd_ios",
+            "name": "Block device \"sda\" read operations",
+            "units": "ops",
+            "per": "node",
+            "documentation": "The average number of read operations per node for block device sda.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "File I/O Statistics"
+        },
+        {
+            "key": "block_sda_wr_ios",
+            "name": "Block device \"sda\" write operations",
+            "units": "ops",
+            "per": "node",
+            "documentation": "The average number of write operations per node for block device sda.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "File I/O Statistics"
+        },
+        {
+            "key": "block_sda_rd_bytes_cov",
+            "name": "Block device \"sda\" data read cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average data read from block device sda",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "File I/O Statistics"
+        },
+        {
+            "key": "block_sda_wr_bytes_cov",
+            "name": "Block device \"sda\" data written cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average data written to block device sda",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "File I/O Statistics"
+        },
+        {
+            "key": "mem_transferred",
+            "name": "Memory Transferred",
+            "units": "bytes",
+            "per": "core",
+            "documentation": "total data transferred over the memory bus",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Memory Statistics"
+        },
+        {
+            "key": "memory_used",
+            "name": "Memory Used",
+            "units": "bytes",
+            "per": "core",
+            "documentation": "Process memory used. This value indicates the memory used by all processes including system services. It does not include the memory used by the OS page or buffer cache. This is the sum of all the process memory on all of the nodes.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Memory Statistics"
+        },
+        {
+            "key": "mem_used_including_os_caches",
+            "name": "Total memory used",
+            "units": "bytes",
+            "per": "core",
+            "documentation": "Total memory used by the OS including the page and buffer caches. This is the sum of all the memory used on all of the nodes.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Memory Statistics"
+        },
+        {
+            "key": "mem_transferred_cov",
+            "name": "Memory Transferred cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average memory transferred for each socket",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Memory Statistics"
+        },
+        {
+            "key": "memory_used_cov",
+            "name": "Memory Used Cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average memory used",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Memory Statistics"
+        },
+        {
+            "key": "max_memory",
+            "name": "Peak Memory Usage Ratio",
+            "units": "ratio",
+            "per": "node",
+            "documentation": "Maximum ratio of memory used to total memory available for the compute node with the highest peak memory usage",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Memory Statistics"
+        },
+        {
+            "key": "mem_used_including_os_caches_cov",
+            "name": "Total memory used cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average memory in use by the OS",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Memory Statistics"
+        },
+        {
+            "key": "ib_rx_bytes",
+            "name": "Ib Rx Bytes",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes received per node over the data interconnect",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_eth0_rx",
+            "name": "Net Eth0 Rx",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes received by network via network interface i averaged across nodes, i.e. net.ib0.rx_bytes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_eth0_tx",
+            "name": "Net Eth0 Tx",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes transmitted by network via network interface i averaged across nodes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_ib0_rx",
+            "name": "Net Ib0 Rx",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes received by network via network interface i averaged across nodes, i.e. net.ib0.rx_bytes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_ib0_tx",
+            "name": "Net Ib0 Tx",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes transmitted by network via network interface i averaged across nodes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_gpfs_rx",
+            "name": "Parallel filesystem gpfs bytes received",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "total number of bytes received per node from the gpfs filesystem.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_gpfs_tx",
+            "name": "Parallel filesystem gpfs bytes transmitted",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes transmitted by network drive i averaged across nodes, i.e. lnet.-.tx_bytes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_isilon_rx",
+            "name": "Parallel filesystem isilon bytes received",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "total number of bytes received per node from the isilon filesystem.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_isilon_tx",
+            "name": "Parallel filesystem isilon bytes transmitted",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes transmitted by network drive i averaged across nodes, i.e. lnet.-.tx_bytes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_panasas_rx",
+            "name": "Parallel filesystem panasas bytes received",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "total number of bytes received per node from the panasas filesystem.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_panasas_tx",
+            "name": "Parallel filesystem panasas bytes transmitted",
+            "units": "bytes",
+            "per": "node",
+            "documentation": "number of bytes transmitted by network drive i averaged across nodes, i.e. lnet.-.tx_bytes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_gpfs_rx_msgs",
+            "name": "Parallel filesystem gpfs messages received",
+            "units": "messages",
+            "per": "node",
+            "documentation": "number of messages received by network drive i averaged across nodes, i.e. lnet.-.rx_msgs",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_gpfs_tx_msgs",
+            "name": "Parallel filesystem gpfs messages transmitted",
+            "units": "messages",
+            "per": "node",
+            "documentation": "number of messages transmitted by network drive i averaged across nodes, i.e. lnet.-.tx_msgs",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_isilon_rx_msgs",
+            "name": "Parallel filesystem isilon messages received",
+            "units": "messages",
+            "per": "node",
+            "documentation": "number of messages received by network drive i averaged across nodes, i.e. lnet.-.rx_msgs",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_isilon_tx_msgs",
+            "name": "Parallel filesystem isilon messages transmitted",
+            "units": "messages",
+            "per": "node",
+            "documentation": "number of messages transmitted by network drive i averaged across nodes, i.e. lnet.-.tx_msgs",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_panasas_rx_msgs",
+            "name": "Parallel filesystem panasas messages received",
+            "units": "messages",
+            "per": "node",
+            "documentation": "number of messages received by network drive i averaged across nodes, i.e. lnet.-.rx_msgs",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_panasas_tx_msgs",
+            "name": "Parallel filesystem panasas messages transmitted",
+            "units": "messages",
+            "per": "node",
+            "documentation": "number of messages transmitted by network drive i averaged across nodes, i.e. lnet.-.tx_msgs",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_eth0_rx_packets",
+            "name": "Net Eth0 Rx Packets",
+            "units": "packets",
+            "per": "node",
+            "documentation": "number of packets received by network via network interface i averaged across nodes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_eth0_tx_packets",
+            "name": "Net Eth0 Tx Packets",
+            "units": "packets",
+            "per": "node",
+            "documentation": "number of packets transmitted by network via network interface i averaged across nodes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_ib0_rx_packets",
+            "name": "Net Ib0 Rx Packets",
+            "units": "packets",
+            "per": "node",
+            "documentation": "number of packets received by network via network interface i averaged across nodes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_ib0_tx_packets",
+            "name": "Net Ib0 Tx Packets",
+            "units": "packets",
+            "per": "node",
+            "documentation": "number of packets transmitted by network via network interface i averaged across nodes",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_eth0_rx_cov",
+            "name": "Net Eth0 Rx Cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes received by the network device eth0 for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "net_eth0_tx_cov",
+            "name": "Net Eth0 Tx Cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes transmitted by the network device eth0 for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_gpfs_rx_cov",
+            "name": "Parallel filesystem gpfs bytes received cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes read from the gpfs parallel filesystem for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_gpfs_tx_cov",
+            "name": "Parallel filesystem gpfs bytes transmitted cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes written to the gpfs parallel filesystem for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_isilon_rx_cov",
+            "name": "Parallel filesystem isilon bytes received cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes read from the isilon parallel filesystem for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_isilon_tx_cov",
+            "name": "Parallel filesystem isilon bytes transmitted cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes written to the isilon parallel filesystem for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_panasas_rx_cov",
+            "name": "Parallel filesystem panasas bytes received cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes read from the panasas parallel filesystem for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "netdrv_panasas_tx_cov",
+            "name": "Parallel filesystem panasas bytes transmitted cov",
+            "units": "ratio",
+            "per": "job",
+            "documentation": "Coefficient of variation of the average bytes written to the panasas parallel filesystem for each node.",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "Network I/O Statistics"
+        },
+        {
+            "key": "error",
+            "name": "Error",
+            "units": null,
+            "per": "job",
+            "documentation": "a string",
+            "dtype": "statistic",
+            "visibility": "public",
+            "group": "misc"
+        }
+    ]
+}

@@ -1,0 +1,116 @@
+{
+    "resources": [
+        {
+            "resource_id": 1,
+            "resource": "yellowstone",
+            "enabled": true,
+            "datasetmap": "ganglia-pcp",
+            "collection": "resource_1",
+            "hardware": {
+                "gpfs": "",
+                "ppn": 16
+            }
+        },
+        {
+            "resource_id": 2,
+            "resource": "booboo",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_2",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 3,
+            "resource": "jellystone",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_3",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 4,
+            "resource": "yogi",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_4",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 5,
+            "resource": "erebus",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_5",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 6,
+            "resource": "caldera",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_6",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 7,
+            "resource": "geyser",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_7",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 8,
+            "resource": "glade",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_8",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 9,
+            "resource": "pronghorn",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_9",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 10,
+            "resource": "fawn",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_10",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 11,
+            "resource": "cheyenne",
+            "enabled": true,
+            "datasetmap": "ganglia-pcp",
+            "collection": "resource_11",
+            "hardware": {
+                "gpfs": "",
+                "ppn": 36
+            }
+        }
+    ]
+}

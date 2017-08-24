@@ -1,0 +1,1777 @@
+{
+    "name": "supremmfact",
+    "schema": "modw_aggregates",
+    "start_ts": null,
+    "end_ts": null,
+    "columns": [
+        {
+            "name": "account_id",
+            "alias": "grant_type",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The name of the account or project (also known as a charge number).",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": -1,
+            "dimension": true,
+            "sql": "account_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "application_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The application that the job ran. This value is autodetected based on the job executable path. A value of uncategorized indicates that the executable path was not recognized as a community application. A value of PROPRIETARY is shown for any application that has a non-open licence agreement that may restrict publishing of performance data. NA means not available.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": null,
+            "dimension": true,
+            "sql": "application_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "block_sda_rd_bytes",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total bytes per second read by block devices in this period.",
+            "dynamictags": [
+                "block_sda_rd_bytes",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: block :label_1 read rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes read per second per node from the local hard disk device :label_1."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_rd_bytes * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_rd_bytes * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (block_sda_rd_bytes * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (block_sda_rd_bytes * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (block_sda_rd_bytes * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "block_sda_rd_bytes_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "block_sda_rd_bytes",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( block_sda_rd_bytes IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "block_sda_rd_ios",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of read io operations per second by block devices in this period.",
+            "dynamictags": [
+                "block_sda_rd_ios",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: block :label_1 read ops rate: Per Node weighted by node-hour",
+                    "unit": "ops/s",
+                    "description": "Average number of read operations per second per node for the local hard disk device :label_1."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_rd_ios * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_rd_ios * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (block_sda_rd_ios * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (block_sda_rd_ios * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (block_sda_rd_ios * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "block_sda_rd_ios_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "block_sda_rd_ios",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( block_sda_rd_ios IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "block_sda_wr_bytes",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total bytes per second written by block devices in this period.",
+            "dynamictags": [
+                "block_sda_wr_bytes",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: block :label_1 write rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes written per second per node to the local hard disk device :label_1."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_wr_bytes * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_wr_bytes * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (block_sda_wr_bytes * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (block_sda_wr_bytes * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (block_sda_wr_bytes * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "block_sda_wr_bytes_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "block_sda_wr_bytes",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( block_sda_wr_bytes IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "block_sda_wr_ios",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of write io operations by block devices in this period.",
+            "dynamictags": [
+                "block_sda_wr_ios",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: block :label_1 write ops rate: Per Node weighted by node-hour",
+                    "unit": "ops/s",
+                    "description": "Average number of write operations per second per node for the local hard disk device :label_1."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_wr_ios * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (block_sda_wr_ios * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (block_sda_wr_ios * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (block_sda_wr_ios * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (block_sda_wr_ios * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "block_sda_wr_ios_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "block_sda_wr_ios",
+                "sda"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( block_sda_wr_ios IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "catastrophe_bucket_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "indicator L1D cache load drop off (smaller is worse)",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "label": "Catastrophe Rank",
+            "dimension_table": "catastrophe_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.catastrophe_buckets cb WHERE coalesce(catastrophe, -1.0) > cb.min AND coalesce(catastrophe, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "cores",
+            "alias": "jobsize",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "Number of processor cores each of the jobs used.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": 0,
+            "dimension": true,
+            "sql": "cores",
+            "sqlType": "int"
+        },
+        {
+            "name": "cpibucket_id",
+            "alias": "cpi",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The number of cpu clock ticks per instruction on average per core.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "label": "CPI Value",
+            "dimension_table": "cpibuckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.cpibuckets cb WHERE coalesce(cpiref, -1.0) > cb.min_cpi AND coalesce(cpiref, -1.0) <= cb.max_cpi)",
+            "sqlType": "int"
+        },
+        {
+            "name": "cpiref_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The weight for jobs with cpi counts that ran during the period",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when (cpiref IS NOT NULL) then 1.0 else 0.0 end * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpiref_weighted_by_coreseconds",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "Total cpiref core seconds.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_cpiref_per_core",
+                    "sql": "sum(jf.cpiref_weighted_by_coreseconds / jf.wall_time / jf.cores * jf.cpiref_weight)/sum(jf.cpiref_weight)",
+                    "requirenotnull": "jf.cpiref_weighted_by_coreseconds",
+                    "decimals": 2,
+                    "label": "Avg: CPI: Per Core weighted by core-hour",
+                    "unit": "CPI",
+                    "description": "The average ratio of clock ticks to instructions per core weighted by core-hour. The CPI is calculated using the reference processor clock."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(cpiref * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpldref_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The weight for jobs with cpld counts that ran during the period",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when (cpldref IS NOT NULL) then 1.0 else 0.0 end * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpldref_weighted_by_coreseconds",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "Total cpldref core seconds.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_cpldref_per_core",
+                    "sql": "sum(jf.cpldref_weighted_by_coreseconds / jf.wall_time / jf.cores * jf.cpldref_weight)/sum(jf.cpldref_weight)",
+                    "requirenotnull": "jf.cpldref_weighted_by_coreseconds",
+                    "decimals": 4,
+                    "label": "Avg: CPLD: Per Core weighted by core-hour",
+                    "unit": "CPLD",
+                    "description": "The average ratio of clock ticks to L1D cache loads per core weighted by core-hour. The CPLD is calculated using the reference processor clock."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(cpldref * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpu_time",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The amount of the cpu_time of the jobs pertaining to this period. If a job took more than one period, its cpu_time is distributed linearly across the periods it spans.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": 0,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (cpu_time) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (cpu_time) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (cpu_time)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpu_time_idle",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The amount of the idle cpu_time of the jobs pertaining to this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "sql": "sum(jf.cpu_time_idle/3600.0)",
+                    "label": "CPU Hours: Idle: Total",
+                    "unit": "CPU Hour",
+                    "requirenotnull": "jf.cpu_time_idle",
+                    "description": "The idle CPU hours for all jobs that were executing during the time period."
+                },
+                {
+                    "name": "avg_percent_cpu_idle",
+                    "sql": "sum(100.0 * jf.cpu_time_idle / jf.cpu_time * jf.cpu_usage_weight)/sum(jf.cpu_usage_weight)",
+                    "label": "Avg CPU %: Idle: weighted by core-hour",
+                    "requirenotnull": "jf.cpu_time_idle",
+                    "unit": "CPU %",
+                    "description": "The average CPU idle % weighted by core hours, over all jobs that were executing."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time*cpu_idle)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time*cpu_idle) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (cpu_time*cpu_idle) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (cpu_time*cpu_idle) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (cpu_time*cpu_idle)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpu_time_system",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The amount of the system cpu_time of the jobs pertaining to this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "sql": "sum(jf.cpu_time_system/3600.0)",
+                    "label": "CPU Hours: System: Total",
+                    "requirenotnull": "jf.cpu_time_system",
+                    "unit": "CPU Hour",
+                    "description": "The system CPU hours for all jobs that were executing during the time period."
+                },
+                {
+                    "name": "avg_percent_cpu_system",
+                    "sql": "sum(100.0 * jf.cpu_time_system / jf.cpu_time * jf.cpu_usage_weight)/sum(jf.cpu_usage_weight)",
+                    "label": "Avg CPU %: System: weighted by core-hour",
+                    "requirenotnull": "jf.cpu_time_system",
+                    "unit": "CPU %",
+                    "description": "The average CPU system % weighted by core hours, over all jobs that were executing."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time*cpu_system)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time*cpu_system) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (cpu_time*cpu_system) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (cpu_time*cpu_system) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (cpu_time*cpu_system)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpu_time_user",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The amount of the user cpu_time of the jobs pertaining to this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "sql": "sum(jf.cpu_time_user/3600.0)",
+                    "label": "CPU Hours: User: Total",
+                    "requirenotnull": "jf.cpu_time_user",
+                    "unit": "CPU Hour",
+                    "description": "The user CPU hours for all jobs that were executing during the time period."
+                },
+                {
+                    "name": "avg_percent_cpu_user",
+                    "sql": "sum(100.0 * jf.cpu_time_user / jf.cpu_time * jf.cpu_usage_weight)/sum(jf.cpu_usage_weight)",
+                    "label": "Avg CPU %: User: weighted by core-hour",
+                    "requirenotnull": "jf.cpu_time_user",
+                    "unit": "CPU %",
+                    "description": "The average CPU user % weighted by core hours, over all jobs that were executing."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time*cpu_user)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (cpu_time*cpu_user) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (cpu_time*cpu_user) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (cpu_time*cpu_user) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (cpu_time*cpu_user)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpu_usage_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The core weight for jobs with cpu user values that ran during the period",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when (cpu_user IS NOT NULL) then 1.0 else 0.0 end * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpu_user_bucketid",
+            "alias": "cpuuser",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The ratio of user cpu time to total cpu time for the cores that the job was assigned.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "label": "CPU User Value",
+            "dimension_table": "percentages_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.percentages_buckets cb WHERE coalesce(100.0 * cpu_user, -1.0) > cb.min AND coalesce(100.0 * cpu_user, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "cpu_user_cv_id",
+            "alias": "cpucv",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "Coefficient of variation for the CPU user for all cores that were assigned to the job.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "label": "CPU User CV",
+            "dimension_table": "cpu_user_cv_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.cpu_user_cv_buckets cb WHERE coalesce(cpu_user_cv, -1.0) > cb.min AND coalesce(cpu_user_cv, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "cpu_user_cv_weighted_core_seconds",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "cpu user CV * core seconds.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_cpuusercv_per_core",
+                    "sql": "sum(jf.cpu_user_cv_weighted_core_seconds / jf.wall_time / jf.cores * jf.cpu_usage_weight)/sum(jf.cpu_usage_weight)",
+                    "requirenotnull": "jf.cpu_user_cv_weighted_core_seconds",
+                    "label": "Avg: CPU User CV: weighted by core-hour",
+                    "unit": "CV",
+                    "description": "The average CPU user coefficient of variation weighted by core-hour. The coefficient of variation is defined as the ratio of the standard deviation to the mean"
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(cpu_user_cv * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "cpu_user_imbalance_weighted_core_seconds",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "Total cpu user imbalance core seconds.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_cpuuserimb_per_core",
+                    "sql": "sum(jf.cpu_user_imbalance_weighted_core_seconds / jf.wall_time / jf.cores * jf.cpu_usage_weight)/sum(jf.cpu_usage_weight)",
+                    "requirenotnull": "jf.cpu_user_imbalance_weighted_core_seconds",
+                    "label": "Avg: CPU User Imbalance: weighted by core-hour",
+                    "unit": "%",
+                    "description": "The average normalized CPU user imbalance weighted by core-hour. Imbalance is defined as 100*(max-min)/max, where max is value of the CPU user for the CPU with the largest CPU user."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(cpu_user_imbalance * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "datasource_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The software used to collect the performance data.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "dimension_table": "datasource",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "datasource_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "exit_status_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The exit status of the job reported by the job scheduler. The meaning of this field depends on the job scheduler.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": null,
+            "dimension": true,
+            "sql": "exit_status_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "flop",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total floating point operations per core in this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_flops_per_core",
+                    "sql": "sum(jf.flop / jf.wall_time * jf.flop_weight)/sum(jf.flop_weight)",
+                    "requirenotnull": "jf.flop",
+                    "label": "Avg: FLOPS: Per Core weighted by core-hour",
+                    "unit": "ops/s",
+                    "description": "The average number of floating point operations per second per core over all jobs that ran in the selected time period."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (flops)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (flops) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (flops) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (flops) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (flops)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "flop_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The core weight for jobs with flops counts that ran during the period",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when (flops IS NOT NULL) then 1.0 else 0.0 end * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "fos_id",
+            "alias": [
+                "fieldofscience",
+                "nsfdirectorate",
+                "parentscience"
+            ],
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "config://hierarchy.json:bottom_level_info",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": -1,
+            "dimension": true,
+            "sql": "fos_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "granted_pe",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "number of granted processing elements (i.e. wayness)",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": null,
+            "dimension": true,
+            "sql": "granted_pe",
+            "sqlType": "int"
+        },
+        {
+            "name": "ib_rx_bytes",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total bytes per second written by block devices in this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_ib_rx_bytes",
+                    "sql": "sum(ib_rx_bytes / jf.wall_time / jf.nodecount_id * jf.ib_rx_bytes_weight)/sum(jf.ib_rx_bytes_weight)",
+                    "requirenotnull": "jf.ib_rx_bytes",
+                    "label": "Avg: InfiniBand rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes received per second per node over the data interconnect. This value only includes the inter-node data transfers and does not count any other data over the interconnect (for example parallel filesystem data)."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (ib_rx_bytes * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (ib_rx_bytes * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (ib_rx_bytes * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (ib_rx_bytes * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (ib_rx_bytes * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "ib_rx_bytes_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with ib_rx_bytes counts that ran during this period",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( ib_rx_bytes IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "ibrxbyterate_bucket_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "number of bytes received per node over the data interconnect",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "label": "InfiniBand Receive rate",
+            "dimension_table": "logscalebytes_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.logscalebytes_buckets cb WHERE coalesce(ib_rx_bytes/wall_time, -1.0) > cb.min AND coalesce(ib_rx_bytes/wall_time, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "job_count",
+            "type": "int32",
+            "roles": null,
+            "length": 50,
+            "comments": "The number of jobs that ended during this period.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [
+                {
+                    "sql": "coalesce(sum(jf.job_count),0)",
+                    "label": "Number of Jobs Ended",
+                    "unit": "Number of Jobs",
+                    "description": "The total number of jobs that ended within the selected duration.<br/><i>Job: </i>A scheduled process for a computer resource in a batch processing environment.",
+                    "decimals": 0
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(CASE WHEN end_time_ts between :period_start_ts and :period_end_ts then 1 else 0 end)",
+            "sqlType": "int"
+        },
+        {
+            "name": "jobtime_id",
+            "alias": "jobwalltime",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "Job time is bucketing of wall time based on prechosen intervals in the modw.job_times table.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": 0,
+            "dimension": true,
+            "sql": "(select id from job_times jt where wall_time >= jt.min_duration and wall_time <= jt.max_duration)",
+            "sqlType": "int"
+        },
+        {
+            "name": "max_mem_bucketid",
+            "alias": "max_mem",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "Maximum ratio of memory used to total memory available for the compute node with the highest peak memory usage",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "label": "Peak Memory Usage (%)",
+            "dimension_table": "percentages_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.percentages_buckets cb WHERE coalesce(100.0 * max_memory, -1.0) > cb.min AND coalesce(100.0 * max_memory, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "mem_transferred",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "Total memory transferred.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_mem_bw_per_core",
+                    "sql": "sum(jf.mem_transferred / jf.wall_time / jf.cores * jf.mem_transferred_weight)/sum(jf.mem_transferred_weight)",
+                    "requirenotnull": "jf.mem_transferred",
+                    "label": "Avg: Memory Bandwidth: Per Core weighted by core-hour",
+                    "unit": "bytes/s",
+                    "description": "The average main-memory transfer rate per core weighted by core-hour."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (mem_transferred)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (mem_transferred) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (mem_transferred) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (mem_transferred) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (mem_transferred)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "mem_transferred_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The weight for jobs with mem_transferred counts that ran during the period",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when (mem_transferred IS NOT NULL) then 1.0 else 0.0 end * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "mem_usage_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The core weight for jobs with memory usage values that ran during the period",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when (memory_used IS NOT NULL) then 1.0 else 0.0 end * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "mem_used_including_os_caches_weighted_by_duration",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total memory seconds used in byte seconds by the OS including the page and buffer caches in this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_total_memory_per_core",
+                    "sql": "sum(jf.mem_used_including_os_caches_weighted_by_duration / jf.wall_time / jf.cores * jf.mem_usage_weight)/sum(jf.mem_usage_weight)",
+                    "requirenotnull": "jf.mem_used_including_os_caches_weighted_by_duration",
+                    "label": "Avg: Total Memory: Per Core weighted by core-hour",
+                    "unit": "bytes",
+                    "description": "The average total memory used (including kernel and disk cache) per core for all selected jobs that ran in the selected time period"
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(mem_used_including_os_caches * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "mem_used_weighted_by_duration",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total memory seconds used in byte seconds in this period. This value indicates the memory used by all processes including system services. It does not include the memory used by the OS page or buffer cache.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_memory_per_core",
+                    "sql": "sum(jf.mem_used_weighted_by_duration / jf.wall_time / jf.cores * jf.mem_usage_weight)/sum(jf.mem_usage_weight)",
+                    "requirenotnull": "jf.mem_used_weighted_by_duration",
+                    "label": "Avg: Memory: Per Core weighted by core-hour",
+                    "unit": "bytes",
+                    "description": "The average memory used per core for all selected jobs that ran in the selected time period"
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(memory_used * cores * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_eth0_rx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of bytes received by network via network interface i in this period.",
+            "dynamictags": [
+                "net_eth0_rx",
+                "eth0"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 receive rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes received per second per node for network device :label_1"
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_eth0_rx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_eth0_rx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (net_eth0_rx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (net_eth0_rx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (net_eth0_rx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_eth0_rx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "net_eth0_rx",
+                "eth0"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( net_eth0_rx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_eth0_tx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of bytes transmitted by by network via network interface i in this period.",
+            "dynamictags": [
+                "net_eth0_tx",
+                "eth0"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 transmit rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes transmitted per second per node for network device :label_1."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_eth0_tx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_eth0_tx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (net_eth0_tx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (net_eth0_tx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (net_eth0_tx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_eth0_tx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "net_eth0_tx",
+                "eth0"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( net_eth0_tx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_ib0_rx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of bytes received by network via network interface i in this period.",
+            "dynamictags": [
+                "net_ib0_rx",
+                "ib0"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 receive rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes received per second per node for network device :label_1"
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_ib0_rx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_ib0_rx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (net_ib0_rx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (net_ib0_rx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (net_ib0_rx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_ib0_rx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "net_ib0_rx",
+                "ib0"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( net_ib0_rx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_ib0_tx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of bytes transmitted by by network via network interface i in this period.",
+            "dynamictags": [
+                "net_ib0_tx",
+                "ib0"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 transmit rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes transmitted per second per node for network device :label_1."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_ib0_tx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (net_ib0_tx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (net_ib0_tx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (net_ib0_tx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (net_ib0_tx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "net_ib0_tx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "net_ib0_tx",
+                "ib0"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( net_ib0_tx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_gpfs_rx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total bytes received by network drive i in this period.",
+            "dynamictags": [
+                "netdrv_gpfs_rx",
+                "gpfs"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 receive rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes received per second per node from the :label_1 filesystem."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_gpfs_rx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_gpfs_rx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (netdrv_gpfs_rx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (netdrv_gpfs_rx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (netdrv_gpfs_rx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_gpfs_rx_bucket_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "total number of bytes received per node from the :label_1 filesystem.",
+            "dynamictags": [
+                "netdrv_gpfs_rx",
+                "gpfs"
+            ],
+            "nullable": true,
+            "stats": [],
+            "label": ":label_1 bytes received",
+            "dimension_table": "log2scale_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.log2scale_buckets cb WHERE coalesce(netdrv_gpfs_rx*nodes, -1.0) > cb.min AND coalesce(netdrv_gpfs_rx*nodes, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "netdrv_gpfs_rx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "netdrv_gpfs_rx",
+                "gpfs"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( netdrv_gpfs_rx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_gpfs_tx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of bytes transmitted by network drive i in this period.",
+            "dynamictags": [
+                "netdrv_gpfs_tx",
+                "gpfs"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 transmit rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes transmitted per second per node to the :label_1 filesystem."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_gpfs_tx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_gpfs_tx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (netdrv_gpfs_tx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (netdrv_gpfs_tx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (netdrv_gpfs_tx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_gpfs_tx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "netdrv_gpfs_tx",
+                "gpfs"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( netdrv_gpfs_tx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_isilon_rx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total bytes received by network drive i in this period.",
+            "dynamictags": [
+                "netdrv_isilon_rx",
+                "isilon"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 receive rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes received per second per node from the :label_1 filesystem."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_isilon_rx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_isilon_rx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (netdrv_isilon_rx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (netdrv_isilon_rx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (netdrv_isilon_rx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_isilon_rx_bucket_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "total number of bytes received per node from the :label_1 filesystem.",
+            "dynamictags": [
+                "netdrv_isilon_rx",
+                "isilon"
+            ],
+            "nullable": true,
+            "stats": [],
+            "label": ":label_1 bytes received",
+            "dimension_table": "log2scale_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.log2scale_buckets cb WHERE coalesce(netdrv_isilon_rx*nodes, -1.0) > cb.min AND coalesce(netdrv_isilon_rx*nodes, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "netdrv_isilon_rx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "netdrv_isilon_rx",
+                "isilon"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( netdrv_isilon_rx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_isilon_tx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of bytes transmitted by network drive i in this period.",
+            "dynamictags": [
+                "netdrv_isilon_tx",
+                "isilon"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 transmit rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes transmitted per second per node to the :label_1 filesystem."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_isilon_tx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_isilon_tx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (netdrv_isilon_tx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (netdrv_isilon_tx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (netdrv_isilon_tx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_isilon_tx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "netdrv_isilon_tx",
+                "isilon"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( netdrv_isilon_tx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_panasas_rx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total bytes received by network drive i in this period.",
+            "dynamictags": [
+                "netdrv_panasas_rx",
+                "panasas"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 receive rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes received per second per node from the :label_1 filesystem."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_panasas_rx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_panasas_rx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (netdrv_panasas_rx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (netdrv_panasas_rx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (netdrv_panasas_rx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_panasas_rx_bucket_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "total number of bytes received per node from the :label_1 filesystem.",
+            "dynamictags": [
+                "netdrv_panasas_rx",
+                "panasas"
+            ],
+            "nullable": true,
+            "stats": [],
+            "label": ":label_1 bytes received",
+            "dimension_table": "log2scale_buckets",
+            "category": "Metrics",
+            "def": null,
+            "dimension": true,
+            "sql": "(SELECT id FROM modw_supremm.log2scale_buckets cb WHERE coalesce(netdrv_panasas_rx*nodes, -1.0) > cb.min AND coalesce(netdrv_panasas_rx*nodes, -1.0) <= cb.max)",
+            "sqlType": "int"
+        },
+        {
+            "name": "netdrv_panasas_rx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "netdrv_panasas_rx",
+                "panasas"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( netdrv_panasas_rx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_panasas_tx",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The total number of bytes transmitted by network drive i in this period.",
+            "dynamictags": [
+                "netdrv_panasas_tx",
+                "panasas"
+            ],
+            "nullable": true,
+            "stats": [
+                {
+                    "name": "avg_:field_name",
+                    "sql": "sum(jf.:field_name / jf.wall_time / jf.nodecount_id * jf.:field_name_weight)/sum(jf.:field_name_weight)",
+                    "requirenotnull": "jf.:field_name",
+                    "label": "Avg: :label_1 transmit rate: Per Node weighted by node-hour",
+                    "unit": "bytes/s",
+                    "description": "Average number of bytes transmitted per second per node to the :label_1 filesystem."
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_panasas_tx * nodecount_id)  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then (netdrv_panasas_tx * nodecount_id) * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then (netdrv_panasas_tx * nodecount_id) * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    (netdrv_panasas_tx * nodecount_id) *( :seconds ) / (end_time_ts - start_time_ts + 1)  else (netdrv_panasas_tx * nodecount_id)  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "netdrv_panasas_tx_weight",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The node weight for jobs with :field_name counts that ran during this period",
+            "dynamictags": [
+                "netdrv_panasas_tx",
+                "panasas"
+            ],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "sum( case when ( netdrv_panasas_tx IS NOT NULL) then 1.0 else 0.0 end * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "sqlType": "double"
+        },
+        {
+            "name": "node_time",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The amount of the node_time of the jobs pertaining to this period. If a job took more than one period, its node_time is distributed linearly across the periods it spans.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [],
+            "def": null,
+            "dimension": false,
+            "sql": "coalesce(sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then node_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then node_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then node_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    node_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else node_time  end), 0)",
+            "sqlType": "double"
+        },
+        {
+            "name": "nodecount_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "foreign key to the nodecount table.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": null,
+            "dimension": true,
+            "sql": "nodecount_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "organization_id",
+            "alias": "provider",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The organization that owns the resource on which the job ran.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": null,
+            "dimension": true,
+            "sql": "organization_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "person_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The name of the job owner.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": -1,
+            "dimension": true,
+            "sql": "person_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "person_organization_id",
+            "alias": "institution",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The name of the organization of the job owner.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": -1,
+            "dimension": true,
+            "sql": "person_organization_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "piperson_organization_id",
+            "alias": "pi_institution",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The organization of the job owner's PI.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": -1,
+            "dimension": true,
+            "sql": "piperson_organization_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "principalinvestigator_person_id",
+            "alias": "pi",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The PI of the job owner.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": -1,
+            "dimension": true,
+            "sql": "principalinvestigator_person_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "processorbucket_id",
+            "type": "int32",
+            "roles": null,
+            "length": 50,
+            "comments": "Processor bucket or job size buckets are prechosen in the modw.processor_buckets table.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": 0,
+            "dimension": false,
+            "sql": "(select id from processor_buckets pb where cores between pb.min_processors and pb.max_processors)",
+            "sqlType": "int"
+        },
+        {
+            "name": "queue_id",
+            "type": "string",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The name of the queue to which the job was submitted.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": "NA",
+            "dimension": true,
+            "sql": "queue_id",
+            "sqlType": "varchar(50)"
+        },
+        {
+            "name": "requested_wall_time",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The requested wall time of the jobs that were running during this period. This will only count the walltime of the jobs that fell during the period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "sql": "coalesce(sum(jf.requested_wall_time/3600.0),0)",
+                    "label": "Wall Hours: Requested: Total",
+                    "unit": "Hour",
+                    "description": "The total time, in hours, jobs requested for execution.<br/><i>Requested Wall Time:</i> Requsted wall time is defined as the user requested linear time between start and end time for execution of a particular job.",
+                    "decimals": 0
+                },
+                {
+                    "name": "requested_wall_time_per_job",
+                    "sql": "coalesce(sum(jf.requested_wall_time/3600.0)/sum(case when :timeseries then jf.running_job_count else jf.job_count end),0)",
+                    "label": "Wall Hours: Requested: Per Job",
+                    "unit": "Hour",
+                    "description": "The average time, in hours, a job requested for execution.<br/><i>Requested Wall Time:</i> Requsted wall time is defined as the user requested linear time between start and end time for execution of a particular job.",
+                    "decimals": 2
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "coalesce(sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then requested_wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then requested_wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then requested_wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    requested_wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else requested_wall_time  end),0)",
+            "sqlType": "double"
+        },
+        {
+            "name": "resource_id",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The resource that ran the job.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": null,
+            "dimension": true,
+            "sql": "resource_id",
+            "sqlType": "int"
+        },
+        {
+            "type": "int32",
+            "dimension": false,
+            "sql": "sum(1)",
+            "comments": "The number of jobs that were running during this period.",
+            "stats": [
+                {
+                    "sql": "coalesce(sum(jf.running_job_count),0)",
+                    "label": "Number of Jobs Running",
+                    "unit": "Number of Jobs",
+                    "description": "The total number of running jobs.<br/><i>Job: </i>A scheduled process for a computer resource in a batch processing environment",
+                    "decimals": 0
+                }
+            ],
+            "name": "running_job_count",
+            "nullable": true,
+            "def": null,
+            "sqlType": "int"
+        },
+        {
+            "name": "shared",
+            "type": "tinyint",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "Whether the job ran on a node that ran at least one other job.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": 0,
+            "dimension": true,
+            "sql": "shared",
+            "sqlType": "tinyint"
+        },
+        {
+            "name": "started_job_count",
+            "type": "int32",
+            "roles": null,
+            "length": 50,
+            "comments": "The number of jobs that started during this period.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [
+                {
+                    "sql": "coalesce(sum(jf.started_job_count),0)",
+                    "label": "Number of Jobs Started",
+                    "unit": "Number of Jobs",
+                    "description": "The total number of jobs that started executing within the selected duration.<br/><i>Job: </i>A scheduled process for a computer resource in a batch processing environment.",
+                    "decimals": 0
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(CASE WHEN start_time_ts between :period_start_ts and :period_end_ts then 1 else 0 end)",
+            "sqlType": "int"
+        },
+        {
+            "name": "submitted_job_count",
+            "type": "int32",
+            "roles": null,
+            "length": 50,
+            "comments": "The number of jobs that started during this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "sql": "coalesce(sum(jf.submitted_job_count),0)",
+                    "label": "Number of Jobs Submitted",
+                    "unit": "Number of Jobs",
+                    "description": "The total number of jobs that were submitted/queued within the selected duration.<br/><i>Job: </i>A scheduled process for a computer resource in a batch processing environment.",
+                    "decimals": 0
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "sum(CASE WHEN submit_time_ts between :period_start_ts and :period_end_ts then 1 else 0 end)",
+            "sqlType": "int"
+        },
+        {
+            "type": "double",
+            "dimension": false,
+            "sql": "sum( ((wall_time + wait_time) / wall_time) * nodecount_id * case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end)",
+            "comments": "The sum of expansion factor per job multiplied by nodecount and the [adjusted] duration of jobs that ran in this period.",
+            "name": "sum_weighted_expansion_factor",
+            "nullable": true,
+            "def": null,
+            "sqlType": "double"
+        },
+        {
+            "name": "systemaccount_id",
+            "alias": "username",
+            "type": "int32",
+            "roles": {
+                "disable": [
+                    "pub"
+                ]
+            },
+            "length": 50,
+            "comments": "The XSEDE username of the user that ran the job.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [],
+            "def": -1,
+            "dimension": true,
+            "sql": "systemaccount_id",
+            "sqlType": "int"
+        },
+        {
+            "name": "wait_time",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The amount of time jobs waited to execute during this period.",
+            "dynamictags": [],
+            "nullable": true,
+            "stats": [
+                {
+                    "sql": "coalesce(sum(jf.wait_time/3600.0),0)",
+                    "weightStat": "started_job_count",
+                    "label": "Wait Hours: Total",
+                    "unit": "Hour",
+                    "description": "The total time, in hours, jobs waited before execution on their designated resource.<br/><i>Wait Time: </i>Wait time is defined as the linear time between submission of a job by a user until it begins to execute."
+                },
+                {
+                    "name": "wait_time_per_job",
+                    "sql": "coalesce(sum(jf.wait_time/3600.0)/sum(jf.started_job_count),0)",
+                    "label": "Wait Hours: Per Job",
+                    "unit": "Hour",
+                    "description": "The average time, in hours, a job waits before execution on the designated resource.<br/><i>Wait Time: </i>Wait time is defined as the linear time between submission of a job by a user until it begins to execute.",
+                    "decimals": 2
+                }
+            ],
+            "def": null,
+            "dimension": false,
+            "sql": "coalesce(sum(CASE WHEN start_time_ts between :period_start_ts and :period_end_ts then wait_time else 0 end),0)",
+            "sqlType": "double"
+        },
+        {
+            "name": "wall_time",
+            "type": "double",
+            "roles": null,
+            "length": 50,
+            "comments": "The wall_time of the jobs that were running during this period. This will only count the walltime of the jobs that fell during the period.",
+            "dynamictags": [],
+            "nullable": false,
+            "stats": [
+                {
+                    "sql": "coalesce(sum(jf.wall_time*jf.cores/3600.0),0)",
+                    "label": "CPU Hours: Total",
+                    "unit": "CPU Hour",
+                    "description": "The total core time, in hours.<br/><i>Core Time:</i> defined as the time between start and end time of execution for a particular job times the number of allocated cores.",
+                    "decimals": 0
+                },
+                {
+                    "name": "wall_time_per_job",
+                    "sql": "coalesce(sum(jf.wall_time/3600.0)/sum(case when :timeseries then jf.running_job_count else jf.job_count end),0)",
+                    "label": "Wall Hours: Per Job",
+                    "unit": "Hour",
+                    "description": "The average time, in hours, a job takes to execute.<br/><i>Wall Time:</i> Wall time is defined as the linear time between start and end time of execution for a particular job.",
+                    "decimals": 2
+                }
+            ],
+            "def": 0,
+            "dimension": false,
+            "sql": "coalesce(sum(case when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time  when (start_time_ts < :period_start_ts and end_time_ts between :period_start_ts and :period_end_ts )  then wall_time * (end_time_ts - :period_start_ts + 1 ) / ( end_time_ts - start_time_ts + 1)  when (start_time_ts between :period_start_ts and :period_end_ts and end_time_ts > :period_end_ts )  then wall_time * (:period_end_ts - start_time_ts + 1 ) / (end_time_ts - start_time_ts + 1)  when (start_time_ts < :period_start_ts and end_time_ts > :period_end_ts )  then    wall_time *( :seconds ) / (end_time_ts - start_time_ts + 1)  else wall_time  end),0)",
+            "sqlType": "double"
+        }
+    ],
+    "etlProfileName": "SUPREMM ETL",
+    "etlProfileVersion": 139
+}

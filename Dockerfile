@@ -1,9 +1,9 @@
-FROM cisl-repo/xdmod_distro:1.3
+FROM cisl-repo/xdmod_distro:1.4
 
-ENV REFRESHED_AT 2017-07-24
+ENV REFRESHED_AT 2017-08-24
 LABEL repo=cisl-repo \
       name=xdmod_cisl_base \
-      version=1.3
+      version=1.4
 
 ENV APP_NAME=xdmod_cisl \
     VOL_SECRETS=/run/secrets \

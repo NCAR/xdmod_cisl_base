@@ -1,0 +1,305 @@
+{
+    "+realms": {
+        "SUPREMM": {
+            "schema": "N/A",
+            "table": "N/A",
+            "datasource": "SUPREMM",
+            "group_bys": [
+                {
+                    "name": "none",
+                    "class": "GroupByNone"
+                },
+                {
+                    "name": "application",
+                    "class": "GroupByApplication"
+                },
+                {
+                    "name": "catastrophe_bucket_id",
+                    "class": "GroupByCatastropheBucketId"
+                },
+                {
+                    "name": "cpi",
+                    "class": "GroupByCpibucketId"
+                },
+                {
+                    "name": "cpucv",
+                    "class": "GroupByCpuUserCvId"
+                },
+                {
+                    "name": "cpuuser",
+                    "class": "GroupByCpuUserBucketid"
+                },
+                {
+                    "name": "datasource",
+                    "class": "GroupByDatasource"
+                },
+                {
+                    "name": "day",
+                    "class": "GroupByDay"
+                },
+                {
+                    "name": "exit_status",
+                    "class": "GroupByExitStatus"
+                },
+                {
+                    "name": "fieldofscience",
+                    "class": "GroupByFieldofscience"
+                },
+                {
+                    "name": "grant_type",
+                    "class": "GroupByGrantType"
+                },
+                {
+                    "name": "granted_pe",
+                    "class": "GroupByGrantedPe"
+                },
+                {
+                    "name": "ibrxbyterate_bucket_id",
+                    "class": "GroupByIbrxbyterateBucketId"
+                },
+                {
+                    "name": "institution",
+                    "class": "GroupByInstitution"
+                },
+                {
+                    "name": "jobsize",
+                    "class": "GroupByJobsize"
+                },
+                {
+                    "name": "jobwalltime",
+                    "class": "GroupByJobwalltime"
+                },
+                {
+                    "name": "max_mem",
+                    "class": "GroupByMaxMemBucketid"
+                },
+                {
+                    "name": "month",
+                    "class": "GroupByMonth"
+                },
+                {
+                    "name": "netdrv_gpfs_rx_bucket_id",
+                    "class": "GroupByNetdrvGpfsRxBucketId"
+                },
+                {
+                    "name": "netdrv_isilon_rx_bucket_id",
+                    "class": "GroupByNetdrvIsilonRxBucketId"
+                },
+                {
+                    "name": "netdrv_panasas_rx_bucket_id",
+                    "class": "GroupByNetdrvPanasasRxBucketId"
+                },
+                {
+                    "name": "nodecount",
+                    "class": "GroupByNodecount"
+                },
+                {
+                    "name": "nsfdirectorate",
+                    "class": "GroupByNsfdirectorate"
+                },
+                {
+                    "name": "parentscience",
+                    "class": "GroupByParentscience"
+                },
+                {
+                    "name": "person",
+                    "class": "GroupByPerson"
+                },
+                {
+                    "name": "pi",
+                    "class": "GroupByPi"
+                },
+                {
+                    "name": "pi_institution",
+                    "class": "GroupByPiInstitution"
+                },
+                {
+                    "name": "provider",
+                    "class": "GroupByProvider"
+                },
+                {
+                    "name": "quarter",
+                    "class": "GroupByQuarter"
+                },
+                {
+                    "name": "queue",
+                    "class": "GroupByQueue"
+                },
+                {
+                    "name": "resource",
+                    "class": "GroupByResource"
+                },
+                {
+                    "name": "shared",
+                    "class": "GroupByShared"
+                },
+                {
+                    "name": "username",
+                    "class": "GroupByUsername"
+                },
+                {
+                    "name": "year",
+                    "class": "GroupByYear"
+                }
+            ],
+            "statistics": [
+                {
+                    "name": "avg_block_sda_rd_bytes",
+                    "class": "avg_block_sda_rd_bytes_Statistic"
+                },
+                {
+                    "name": "avg_block_sda_rd_ios",
+                    "class": "avg_block_sda_rd_ios_Statistic"
+                },
+                {
+                    "name": "avg_block_sda_wr_bytes",
+                    "class": "avg_block_sda_wr_bytes_Statistic"
+                },
+                {
+                    "name": "avg_block_sda_wr_ios",
+                    "class": "avg_block_sda_wr_ios_Statistic"
+                },
+                {
+                    "name": "avg_cpiref_per_core",
+                    "class": "avg_cpiref_per_core_Statistic"
+                },
+                {
+                    "name": "avg_cpldref_per_core",
+                    "class": "avg_cpldref_per_core_Statistic"
+                },
+                {
+                    "name": "avg_cpuusercv_per_core",
+                    "class": "avg_cpuusercv_per_core_Statistic"
+                },
+                {
+                    "name": "avg_cpuuserimb_per_core",
+                    "class": "avg_cpuuserimb_per_core_Statistic"
+                },
+                {
+                    "name": "avg_flops_per_core",
+                    "class": "avg_flops_per_core_Statistic"
+                },
+                {
+                    "name": "avg_ib_rx_bytes",
+                    "class": "avg_ib_rx_bytes_Statistic"
+                },
+                {
+                    "name": "avg_mem_bw_per_core",
+                    "class": "avg_mem_bw_per_core_Statistic"
+                },
+                {
+                    "name": "avg_memory_per_core",
+                    "class": "avg_memory_per_core_Statistic"
+                },
+                {
+                    "name": "avg_net_eth0_rx",
+                    "class": "avg_net_eth0_rx_Statistic"
+                },
+                {
+                    "name": "avg_net_eth0_tx",
+                    "class": "avg_net_eth0_tx_Statistic"
+                },
+                {
+                    "name": "avg_net_ib0_rx",
+                    "class": "avg_net_ib0_rx_Statistic"
+                },
+                {
+                    "name": "avg_net_ib0_tx",
+                    "class": "avg_net_ib0_tx_Statistic"
+                },
+                {
+                    "name": "avg_netdrv_gpfs_rx",
+                    "class": "avg_netdrv_gpfs_rx_Statistic"
+                },
+                {
+                    "name": "avg_netdrv_gpfs_tx",
+                    "class": "avg_netdrv_gpfs_tx_Statistic"
+                },
+                {
+                    "name": "avg_netdrv_isilon_rx",
+                    "class": "avg_netdrv_isilon_rx_Statistic"
+                },
+                {
+                    "name": "avg_netdrv_isilon_tx",
+                    "class": "avg_netdrv_isilon_tx_Statistic"
+                },
+                {
+                    "name": "avg_netdrv_panasas_rx",
+                    "class": "avg_netdrv_panasas_rx_Statistic"
+                },
+                {
+                    "name": "avg_netdrv_panasas_tx",
+                    "class": "avg_netdrv_panasas_tx_Statistic"
+                },
+                {
+                    "name": "avg_percent_cpu_idle",
+                    "class": "avg_percent_cpu_idle_Statistic"
+                },
+                {
+                    "name": "avg_percent_cpu_system",
+                    "class": "avg_percent_cpu_system_Statistic"
+                },
+                {
+                    "name": "avg_percent_cpu_user",
+                    "class": "avg_percent_cpu_user_Statistic"
+                },
+                {
+                    "name": "avg_total_memory_per_core",
+                    "class": "avg_total_memory_per_core_Statistic"
+                },
+                {
+                    "name": "cpu_time_idle",
+                    "class": "cpu_time_idle_Statistic"
+                },
+                {
+                    "name": "cpu_time_system",
+                    "class": "cpu_time_system_Statistic"
+                },
+                {
+                    "name": "cpu_time_user",
+                    "class": "cpu_time_user_Statistic"
+                },
+                {
+                    "name": "job_count",
+                    "class": "job_count_Statistic"
+                },
+                {
+                    "name": "requested_wall_time",
+                    "class": "requested_wall_time_Statistic"
+                },
+                {
+                    "name": "requested_wall_time_per_job",
+                    "class": "requested_wall_time_per_job_Statistic"
+                },
+                {
+                    "name": "running_job_count",
+                    "class": "running_job_count_Statistic"
+                },
+                {
+                    "name": "started_job_count",
+                    "class": "started_job_count_Statistic"
+                },
+                {
+                    "name": "submitted_job_count",
+                    "class": "submitted_job_count_Statistic"
+                },
+                {
+                    "name": "wait_time",
+                    "class": "wait_time_Statistic"
+                },
+                {
+                    "name": "wait_time_per_job",
+                    "class": "wait_time_per_job_Statistic"
+                },
+                {
+                    "name": "wall_time",
+                    "class": "wall_time_Statistic"
+                },
+                {
+                    "name": "wall_time_per_job",
+                    "class": "wall_time_per_job_Statistic"
+                }
+            ]
+        }
+    }
+}

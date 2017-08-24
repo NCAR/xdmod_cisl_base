@@ -1,0 +1,282 @@
+{
+    "+roles": {
+        "+default": {
+            "+query_descripters": [
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "none"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "application"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "catastrophe_bucket_id"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "cpi"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "cpucv"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "cpuuser"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "datasource"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "exit_status"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "fieldofscience"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "grant_type"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "granted_pe"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "ibrxbyterate_bucket_id"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "institution"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "jobsize"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "jobwalltime"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "max_mem"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "netdrv_gpfs_rx_bucket_id"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "netdrv_isilon_rx_bucket_id"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "netdrv_panasas_rx_bucket_id"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "nodecount"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "nsfdirectorate"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "parentscience"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "person"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "pi"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "pi_institution"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "provider"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "queue"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "resource"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "shared"
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "username"
+                }
+            ]
+        },
+        "+pub": {
+            "+query_descripters": [
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "none",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "application",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "catastrophe_bucket_id",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "cpi",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "cpucv",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "cpuuser",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "datasource",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "exit_status",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "fieldofscience",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "grant_type",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "granted_pe",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "ibrxbyterate_bucket_id",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "institution",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "jobsize",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "jobwalltime",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "max_mem",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "netdrv_gpfs_rx_bucket_id",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "netdrv_isilon_rx_bucket_id",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "netdrv_panasas_rx_bucket_id",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "nodecount",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "nsfdirectorate",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "parentscience",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "person",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "pi",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "pi_institution",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "provider",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "queue",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "resource",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "shared",
+                    "disable": true
+                },
+                {
+                    "realm": "SUPREMM",
+                    "group_by": "username",
+                    "disable": true
+                }
+            ]
+        }
+    }
+}
