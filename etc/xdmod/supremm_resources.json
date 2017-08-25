@@ -2,18 +2,17 @@
     "resources": [
         {
             "resource_id": 1,
-            "resource": "yellowstone",
-            "enabled": true,
-            "datasetmap": "ganglia-pcp",
+            "resource": "caldera",
+            "enabled": false,
+            "datasetmap": "pcp",
             "collection": "resource_1",
             "hardware": {
-                "gpfs": "",
-                "ppn": 16
+                "gpfs": ""
             }
         },
         {
             "resource_id": 2,
-            "resource": "booboo",
+            "resource": "geyser",
             "enabled": false,
             "datasetmap": "pcp",
             "collection": "resource_2",
@@ -23,7 +22,7 @@
         },
         {
             "resource_id": 3,
-            "resource": "jellystone",
+            "resource": "glade",
             "enabled": false,
             "datasetmap": "pcp",
             "collection": "resource_3",
@@ -33,12 +32,13 @@
         },
         {
             "resource_id": 4,
-            "resource": "yogi",
-            "enabled": false,
-            "datasetmap": "pcp",
+            "resource": "yellowstone",
+            "enabled": true,
+            "datasetmap": "ganglia-pcp",
             "collection": "resource_4",
             "hardware": {
-                "gpfs": ""
+                "gpfs": "",
+                "ppn": 16
             }
         },
         {
@@ -53,7 +53,7 @@
         },
         {
             "resource_id": 6,
-            "resource": "caldera",
+            "resource": "booboo",
             "enabled": false,
             "datasetmap": "pcp",
             "collection": "resource_6",
@@ -63,7 +63,7 @@
         },
         {
             "resource_id": 7,
-            "resource": "geyser",
+            "resource": "fawn",
             "enabled": false,
             "datasetmap": "pcp",
             "collection": "resource_7",
@@ -73,7 +73,7 @@
         },
         {
             "resource_id": 8,
-            "resource": "glade",
+            "resource": "jellystone",
             "enabled": false,
             "datasetmap": "pcp",
             "collection": "resource_8",
@@ -83,7 +83,7 @@
         },
         {
             "resource_id": 9,
-            "resource": "pronghorn",
+            "resource": "yogi",
             "enabled": false,
             "datasetmap": "pcp",
             "collection": "resource_9",
@@ -93,7 +93,7 @@
         },
         {
             "resource_id": 10,
-            "resource": "fawn",
+            "resource": "pronghorn",
             "enabled": false,
             "datasetmap": "pcp",
             "collection": "resource_10",
@@ -103,10 +103,30 @@
         },
         {
             "resource_id": 11,
+            "resource": "laramie",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_11",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 12,
+            "resource": "flash",
+            "enabled": false,
+            "datasetmap": "pcp",
+            "collection": "resource_12",
+            "hardware": {
+                "gpfs": ""
+            }
+        },
+        {
+            "resource_id": 13,
             "resource": "cheyenne",
             "enabled": true,
             "datasetmap": "ganglia-pcp",
-            "collection": "resource_11",
+            "collection": "resource_13",
             "hardware": {
                 "gpfs": "",
                 "ppn": 36
