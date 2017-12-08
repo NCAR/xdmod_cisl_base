@@ -12,11 +12,13 @@
     {
         "resource": "caldera",
         "resource_type_id": 2,
+        "pi_column": "account",
         "name": "caldera.ucar.edu"
     },
     {
         "resource": "geyser",
         "resource_type_id": 2,
+        "pi_column": "account",
         "name": "geyser.ucar.edu"
     },
     {
@@ -42,6 +44,7 @@
     {
         "resource": "pronghorn",
         "resource_type_id": 2,
+        "pi_column": "account",
         "name": "pronghorn.ucar.edu"
     },
     {
