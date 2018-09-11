@@ -68,5 +68,11 @@
         "resource": "flash",
         "resource_type_id": 1,
         "name": "flash.ucar.edu"
+    },
+    {
+        "resource": "yslogin",
+        "resource_type_id": 2,
+        "pi_column": "account_name",
+        "name": "yslogin.ucar.edu"
     }
 ]

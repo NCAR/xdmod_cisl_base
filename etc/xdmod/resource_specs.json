@@ -76,6 +76,13 @@
         "processors": 64,
         "nodes": 4,
         "ppn": 16
-    }
+    },
+    {
+        "resource": "yslogin",
+        "processors": 256,
+        "nodes": 6,
+        "ppn": 32
+    },
+
 ]
 
