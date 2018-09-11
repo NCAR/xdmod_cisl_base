@@ -3,7 +3,7 @@ FROM cisl-repo/xdmod_distro:1.4
 ENV REFRESHED_AT 2017-12-01
 LABEL repo=cisl-repo \
       name=xdmod_cisl_base \
-      version=1.5
+      version=1.6
 
 ARG HOME=/home/xdmod
 ARG TZ=America/Denver
