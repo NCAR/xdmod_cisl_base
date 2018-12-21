@@ -82,6 +82,12 @@
         "processors": 288,
         "nodes": 9,
         "ppn": 32
+    },
+    {
+        "resource": "casper",
+        "processors": 864,
+        "nodes": 24,
+        "ppn": 36
     }
 
 ]

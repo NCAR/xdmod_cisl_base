@@ -74,5 +74,11 @@
         "resource_type_id": 2,
         "pi_column": "account_name",
         "name": "yslogin.ucar.edu"
+    },
+    {
+        "resource": "casper",
+        "resource_type_id": 2,
+        "pi_column": "account_name",
+        "name": "casper.ucar.edu"
     }
 ]
